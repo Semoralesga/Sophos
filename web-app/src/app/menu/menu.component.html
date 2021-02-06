@@ -1,0 +1,31 @@
+<mat-toolbar class="bgc-dark-blue">
+  <mat-icon class="white-color" (click)="toggle()" fxHide.gt-sm>menu</mat-icon>
+</mat-toolbar>
+
+<div *ngIf="!menu" fxLayout="row" fxLayout="space-around">
+  <div class="menu-div" fxFlex="15" fxHide.xs fxHide.sm>
+    <app-side-nav (changeView)="menuHandler($event, false)"></app-side-nav>
+  </div>
+
+  <div fxFlex="85" fxFlex.xs="100" fxFlex.sm="100">
+    <div *ngIf="formView" style="margin-top: 7%">
+      <app-form
+        (changeView)="menuHandler($event, false)"
+        (profileData)="pushProfileData($event, isEdit)"
+        [isEdit]="isEdit"
+        [profileDataToEdit]="profileDataToEdit"
+      ></app-form>
+    </div>
+    <div *ngIf="tableView" style="margin-top: 7%">
+      <app-profile-list
+        [profilesData]="profiles"
+        (editProfileData)="editProfile($event)"
+      ></app-profile-list>
+    </div>
+  </div>
+</div>
+<div *ngIf="menu">
+  <div fxFlex="100">
+    <app-side-nav (changeView)="menuHandler($event, true)"></app-side-nav>
+  </div>
+</div>

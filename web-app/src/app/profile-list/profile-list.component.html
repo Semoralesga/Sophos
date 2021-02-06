@@ -1,0 +1,109 @@
+<div class="pad-table">
+  <div class="header">
+    <div fxLayout="row" fxLayoutAlign="center center" class="table-row">
+      <div class="text-center" fxFlex="16" fxFlex.sm="30" fxFlex.xs="30">
+        <h3 class="header-text">Nombre</h3>
+      </div>
+      <div class="text-center" fxFlex="16" fxFlex.sm="30" fxFlex.xs="30">
+        <h3 class="header-text">Identificación</h3>
+      </div>
+      <div class="text-center" fxFlex="16" fxHide.sm fxHide.xs>
+        <h3 class="header-text">Género</h3>
+      </div>
+      <div class="text-center" fxFlex="16" fxHide.sm fxHide.xs>
+        <h3 class="header-text">Cumpleaños</h3>
+      </div>
+      <div class="text-center" fxFlex="16" fxFlex.sm="30" fxFlex.xs="30">
+        <h3 class="header-text">Celular</h3>
+      </div>
+      <div class="text-center" fxFlex="16" fxHide.sm fxHide.xs>
+        <h3 class="header-text">Foto de perfil</h3>
+      </div>
+      <div
+        class="text-center"
+        fxFlex="4"
+        fxFlex.sm="10"
+        fxFlex.xs="10"
+        style="padding-bottom: 50px"
+      ></div>
+    </div>
+  </div>
+
+  <div *ngIf="profiles?.length > 0; else empty">
+    <div
+      *ngFor="let profile of profilesToShow; let index = index"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      class="table-row"
+    >
+      <div class="text-center" fxFlex="16" fxFlex.sm="30" fxFlex.xs="30">
+        <p class="row-text">{{ profile.fullName }}</p>
+      </div>
+      <div class="text-center" fxFlex="16" fxFlex.sm="30" fxFlex.xs="30">
+        <p class="row-text">{{ profile.numberId }}</p>
+      </div>
+      <div class="text-center" fxFlex="16" fxHide.sm fxHide.xs>
+        <p class="row-text">{{ profile.genre }}</p>
+      </div>
+      <div class="text-center" fxFlex="16" fxHide.sm fxHide.xs>
+        <p class="row-text">{{ profile.birthDate | date: "dd/MM/yy" }}</p>
+      </div>
+      <div class="text-center" fxFlex="16" fxFlex.sm="30" fxFlex.xs="30">
+        <p class="row-text">{{ profile.phoneNumber }}</p>
+      </div>
+      <div class="text-center" fxFlex="16" fxHide.sm fxHide.xs>
+        <p class="row-text">{{ profile.profilePhoto }}</p>
+      </div>
+      <div
+        class="text-center pointer"
+        (click)="editProfile(profile, index)"
+        fxFlex="4"
+        fxFlex.sm="10"
+        fxFlex.xs="10"
+      >
+        <mat-icon>edit</mat-icon>
+      </div>
+    </div>
+    <div
+      class="paginator"
+      *ngIf="profiles?.length > 10"
+      fxLayout="row"
+      fxLayoutAlign="flex-end"
+    >
+      <mat-icon
+        class="green-light-color pointer"
+        (click)="paginationEvent(pageIndex - 1)"
+        >arrow_back_ios</mat-icon
+      >
+      <div
+        *ngFor="let numPage of pageOptions"
+        style="margin-right: 2%; margin-left: 2%"
+      >
+        <div class="index-color pointer" (click)="paginationEvent(numPage - 1)">
+          <p>{{ numPage }}</p>
+        </div>
+      </div>
+      <mat-icon
+        class="green-light-color pointer"
+        (click)="paginationEvent(pageIndex + 1)"
+        style="margin-left: 0.5%"
+        >arrow_forward_ios</mat-icon
+      >
+    </div>
+  </div>
+  <ng-template #empty>
+    <div class="text-center" style="margin-top: 2%">
+      <h3 class="header-text">La lista de perfiles esta vacia</h3>
+    </div>
+  </ng-template>
+</div>
+<div fxLayout="row" style="margin-left: 2%; margin-top: 2%; margin-bottom: 2%">
+  <button
+    mat-raised-button
+    class="dark-blue-button"
+    (click)="downloadExcel()"
+    [disabled]="profiles === null"
+  >
+    <span class="white-color">&nbsp; Descargar Excel &nbsp;</span>
+  </button>
+</div>
